@@ -133,5 +133,6 @@ public class TestElementAnnotator extends CasAnnotator_ImplBase
 		te.setQuestion(q);
 		
 		te.addToIndexes();
+		System.out.println("    Annotated test element in document " + q.getId() + ".");
 	}
 }

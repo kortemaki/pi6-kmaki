@@ -35,6 +35,7 @@ import type.Ngram;
 import type.NgramAnnotation;
 import type.NgramSet;
 import type.Span;
+import type.TestElementAnnotation;
 import type.TokenAnnotation;
 import type.TokenizedSpan;
 
@@ -104,6 +105,7 @@ public class NgramAnnotator extends CasAnnotator_ImplBase {
 			annot.setOrig(te.getOrig());
 			annot.setComponentId(NAME);
 			annot.addToIndexes();
+			System.out.println("    Annotated ngrams in document " + ((TestElementAnnotation) te.getOrig()).getQuestion().getId() + ".");
 		}
 	}
 

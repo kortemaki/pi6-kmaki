@@ -73,16 +73,17 @@ public class TypeUtils {
 	}
 	
 	/**
-	 * Finds the first TOP in the FSList list that checks out under Method checkMethod.
+	 * Finds the first TOP in the FSList list that checks out under the checkMethods.
 	 * If no such element is matched, returns null.
 	 * 
 	 * @param list the FSList to search for a matching TOP
-	 * @param checkMethod the RTMethod with which to identify matching instances
+	 * @param checkMethods the CheckMethod conditions with which to identify matching instances
 	 * @return the matched element (if any), else null
 	 */
-	public static <T> TOP getFromFSList(FSList list, RTMethod checkMethod)
+	public static <T> TOP getFromFSList(FSList list, Class<?> cls, CheckMethod... checkMethods)
 	{
-		List<TOP> matched = getAllFromFSList(list,checkMethod);
+		//System.out.println("        Calling getAllFromFSList...");
+		List<TOP> matched = getAllFromFSList(list, cls, checkMethods);
 		if(matched.size() > 0)
 		{
 			return matched.get(0);
@@ -91,31 +92,39 @@ public class TypeUtils {
 	}
 	
 	/**
-	 * Finds all TOP in the FSList list that check out under RTMethod checkMethod.
+	 * Finds all TOP in the FSList list that check out under each of the RTMethod checkMethods.
 	 * If no such elements are matched, returns an empty List.
 	 * 
 	 * @param list the FSList to search for matching TOP
-	 * @param checkMethod the RTMethod with which to identify matching instances
+	 * @param checkMethods the CheckMethod conditions required to identify matching instances
 	 * @return a List<TOP> of the matched elements (if any)
 	 */
-	public static <T> List<TOP> getAllFromFSList(FSList list, RTMethod checkMethod)
+	public static <T> List<TOP> getAllFromFSList(FSList list, Class<?> type, CheckMethod... checkMethods)
 	{
 		List<TOP> results = new LinkedList<TOP>();
 		while(list instanceof NonEmptyFSList)
 		{
+			//System.out.println("          Identified head.");
 			TOP el = (TOP) ((NonEmptyFSList) list).getHead();
 			try
 			{
-				if((Boolean) checkMethod.invoke(el))
+				//See if the element checks out okay
+				for(CheckMethod checkMethod : checkMethods)
 				{
-					results.add(el);
+					if(((Integer) checkMethod.invoke(type.cast(el)))!=0)
+					{
+						//System.out.println("          Head did not meet check requirements.");
+						continue;
+					}
 				}
+				results.add(el);
 			}
 			catch(Throwable e)
 			{
-				//This element obviously did not match
-				continue;
+				//Whatever happened, this element obviously did not match
+				//System.out.println("            Element could not be thoroughly checked by " + checkMethods + ".");
 			}
+			//Move on to next element
 			list = ((NonEmptyFSList) list).getTail();
 		}
 		return results;
