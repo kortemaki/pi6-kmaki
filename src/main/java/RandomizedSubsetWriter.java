@@ -16,6 +16,7 @@ import org.apache.uima.resource.ResourceProcessException;
 
 import type.Measurement;
 import type.Question;
+import util.RandomUtils;
 
 /**
  * This CAS Consumer generates the report file with the method metrics
