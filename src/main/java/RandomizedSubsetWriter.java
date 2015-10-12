@@ -5,17 +5,17 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.CASException;
+import org.apache.uima.cas.FSIndex;
 import org.apache.uima.collection.CasConsumer_ImplBase;
 import org.apache.uima.collection.CollectionException;
-import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.ResourceProcessException;
 
-import type.Measurement;
-import type.Question;
+import type.OutputAnnotation;
 import util.RandomUtils;
 
 /**
@@ -57,22 +57,22 @@ public class RandomizedSubsetWriter extends CasConsumer_ImplBase {
       }
 
       writer.println("question_id,tp,fn,fp,precision,recall,f1");
-      // Retrieve all the questions for printout
-      List<Question> allQuestions = new ArrayList<Question>(JCasUtil.select(aJCas, Question.class));
-      List<Question> subsetOfQuestions = RandomUtils.getRandomSubset(allQuestions, 10);
+      
+      // Retrieve the questions for printout
+      List<OutputAnnotation> allQuestions = new ArrayList<OutputAnnotation>();
+      @SuppressWarnings({ "unchecked", "rawtypes" })
+      FSIndex<OutputAnnotation> teIndex = (FSIndex) aJCas.getAnnotationIndex(OutputAnnotation.type);
+      for(OutputAnnotation m : teIndex)
+      {
+    	  allQuestions.add(m);
+      }
+      List<OutputAnnotation> subsetOfQuestions = RandomUtils.getRandomSubset(allQuestions, 10);
 
+      
       // TODO: Here one needs to sort the questions in ascending order of their question ID
 
-      for (Question q : subsetOfQuestions) {
-        Measurement m = q.getMeasurement();
-
-        // TODO: Calculate actual precision, recall and F1
-        double precision = 0.0;
-        double recall = 0.0;
-        double f1 = 0.0;
-
-        writer.printf("%s,%d,%d,%d,%.3f,%.3f,%.3f\n", q.getId(), m.getTp(), m.getFn(), m.getFp(),
-                precision, recall, f1);
+      for (OutputAnnotation output : subsetOfQuestions) {
+        writer.printf(output.getText());
       }
     } catch (CASException e) {
       try {

@@ -4,15 +4,15 @@
   <primitive>false</primitive>  
   <delegateAnalysisEngineSpecifiers>
     <delegateAnalysisEngine key="analysisEngineDescriptor">
-      <import name=".media.maki.OS.Users.Keith.Documents.CMU.Coursework.11791.PI5.pi5-kmaki.target.classes.descriptors.aaeDescriptors.analysisEngineDescriptor"/>
+      <import name="descriptors.aaeDescriptors.analysisEngineDescriptor"/>
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="evaluationEngine">
-      <import name=".media.maki.OS.Users.Keith.Documents.CMU.Coursework.11791.PI5.pi5-kmaki.src.main.resources.descriptors.aaeDescriptors.evaluationEngine"/>
+      <import name="descriptors.aaeDescriptors.evaluationEngine"/>
     </delegateAnalysisEngine>
   </delegateAnalysisEngineSpecifiers>
   <analysisEngineMetaData>
     <name>aaeDescriptor</name>
-    <description>The Aggregate Analysis Engine for pi5-kmaki.  Chains the analysis and evaluation aaes in sequence in order to evaluate the analysis system.</description>
+    <description>The Aggregate Analysis Engine for pi6-kmaki.  Chains the analysis and evaluation aaes in sequence in order to evaluate the analysis system.</description>
     <version>1.0</version>
     <vendor/>
     <configurationParameters/>

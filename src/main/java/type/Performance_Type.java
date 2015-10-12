@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** Annotates performance of the system on a single test element.
- * Updated by JCasGen Mon Oct 05 15:32:22 EDT 2015
+ * Updated by JCasGen Mon Oct 12 12:04:00 EDT 2015
  * @generated */
 public class Performance_Type extends ComponentAnnotation_Type {
   /** @generated 
@@ -70,98 +70,26 @@ public class Performance_Type extends ComponentAnnotation_Type {
   
  
   /** @generated */
-  final Feature casFeat_pAt1;
+  final Feature casFeat_metrics;
   /** @generated */
-  final int     casFeatCode_pAt1;
+  final int     casFeatCode_metrics;
   /** @generated
    * @param addr low level Feature Structure reference
    * @return the feature value 
    */ 
-  public float getPAt1(int addr) {
-        if (featOkTst && casFeat_pAt1 == null)
-      jcas.throwFeatMissing("pAt1", "type.Performance");
-    return ll_cas.ll_getFloatValue(addr, casFeatCode_pAt1);
+  public int getMetrics(int addr) {
+        if (featOkTst && casFeat_metrics == null)
+      jcas.throwFeatMissing("metrics", "type.Performance");
+    return ll_cas.ll_getRefValue(addr, casFeatCode_metrics);
   }
   /** @generated
    * @param addr low level Feature Structure reference
    * @param v value to set 
    */    
-  public void setPAt1(int addr, float v) {
-        if (featOkTst && casFeat_pAt1 == null)
-      jcas.throwFeatMissing("pAt1", "type.Performance");
-    ll_cas.ll_setFloatValue(addr, casFeatCode_pAt1, v);}
-    
-  
- 
-  /** @generated */
-  final Feature casFeat_pAt5;
-  /** @generated */
-  final int     casFeatCode_pAt5;
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @return the feature value 
-   */ 
-  public float getPAt5(int addr) {
-        if (featOkTst && casFeat_pAt5 == null)
-      jcas.throwFeatMissing("pAt5", "type.Performance");
-    return ll_cas.ll_getFloatValue(addr, casFeatCode_pAt5);
-  }
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @param v value to set 
-   */    
-  public void setPAt5(int addr, float v) {
-        if (featOkTst && casFeat_pAt5 == null)
-      jcas.throwFeatMissing("pAt5", "type.Performance");
-    ll_cas.ll_setFloatValue(addr, casFeatCode_pAt5, v);}
-    
-  
- 
-  /** @generated */
-  final Feature casFeat_rr;
-  /** @generated */
-  final int     casFeatCode_rr;
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @return the feature value 
-   */ 
-  public float getRr(int addr) {
-        if (featOkTst && casFeat_rr == null)
-      jcas.throwFeatMissing("rr", "type.Performance");
-    return ll_cas.ll_getFloatValue(addr, casFeatCode_rr);
-  }
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @param v value to set 
-   */    
-  public void setRr(int addr, float v) {
-        if (featOkTst && casFeat_rr == null)
-      jcas.throwFeatMissing("rr", "type.Performance");
-    ll_cas.ll_setFloatValue(addr, casFeatCode_rr, v);}
-    
-  
- 
-  /** @generated */
-  final Feature casFeat_ap;
-  /** @generated */
-  final int     casFeatCode_ap;
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @return the feature value 
-   */ 
-  public float getAp(int addr) {
-        if (featOkTst && casFeat_ap == null)
-      jcas.throwFeatMissing("ap", "type.Performance");
-    return ll_cas.ll_getFloatValue(addr, casFeatCode_ap);
-  }
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @param v value to set 
-   */    
-  public void setAp(int addr, float v) {
-        if (featOkTst && casFeat_ap == null)
-      jcas.throwFeatMissing("ap", "type.Performance");
-    ll_cas.ll_setFloatValue(addr, casFeatCode_ap, v);}
+  public void setMetrics(int addr, int v) {
+        if (featOkTst && casFeat_metrics == null)
+      jcas.throwFeatMissing("metrics", "type.Performance");
+    ll_cas.ll_setRefValue(addr, casFeatCode_metrics, v);}
     
   
 
@@ -181,20 +109,8 @@ public class Performance_Type extends ComponentAnnotation_Type {
     casFeatCode_testElement  = (null == casFeat_testElement) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_testElement).getCode();
 
  
-    casFeat_pAt1 = jcas.getRequiredFeatureDE(casType, "pAt1", "uima.cas.Float", featOkTst);
-    casFeatCode_pAt1  = (null == casFeat_pAt1) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_pAt1).getCode();
-
- 
-    casFeat_pAt5 = jcas.getRequiredFeatureDE(casType, "pAt5", "uima.cas.Float", featOkTst);
-    casFeatCode_pAt5  = (null == casFeat_pAt5) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_pAt5).getCode();
-
- 
-    casFeat_rr = jcas.getRequiredFeatureDE(casType, "rr", "uima.cas.Float", featOkTst);
-    casFeatCode_rr  = (null == casFeat_rr) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_rr).getCode();
-
- 
-    casFeat_ap = jcas.getRequiredFeatureDE(casType, "ap", "uima.cas.Float", featOkTst);
-    casFeatCode_ap  = (null == casFeat_ap) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_ap).getCode();
+    casFeat_metrics = jcas.getRequiredFeatureDE(casType, "metrics", "uima.cas.FSList", featOkTst);
+    casFeatCode_metrics  = (null == casFeat_metrics) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_metrics).getCode();
 
   }
 }

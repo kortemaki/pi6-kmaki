@@ -2,6 +2,7 @@ package util;
 
 import java.lang.reflect.Method;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -33,30 +34,81 @@ public class TypeUtils {
 		return next;
 	}
 
-	public static <T> Method makeMethod(String className, String methodName, Class<T>... params)
+	/**
+	 * Auxiliary method to simplify the process of instantiating a reflection method instance.
+	 * @param <T>
+	 *  
+	 * @param className the name of the class whose method should be instantiated.
+	 * @param methodName the name of the method to be instantiated.
+	 * @param params the classes of the respective parameters to the method to be instantiated.
+	 * @return the instantiated method.
+	 */
+	public static <T> Method instantiateMethod(Class<T> cls, String methodName, Class<?>... params)
 	{
 		try 
 		{
-			Class<?> cls = Class.forName(className);
 			return cls.getMethod(methodName, params);
 		} 
 		catch(Throwable e)
 		{
-			throw new IllegalArgumentException("Error: " + e.getMessage());
+			throw new IllegalArgumentException("Error: " + e.getMessage() +
+						"\nCould not instantiate method " + cls.getName() + "." + methodName);
 		}
 	}
 	
-	public static <T> TOP get(FSList list, Method checkMethod, T... args)
+	/**
+	 * Adds TOP el to an FSList list and returns the updated FSList, associated with JCas jcas.
+	 * 
+	 * @param list the FSList to which to add el.
+	 * @param el the TOP to add to list.
+	 * @param jcas the JCas with which to associate created FSList objects.
+	 * @return the updated FSList.
+	 */
+	public static FSList addToFSList(FSList list, TOP el, JCas jcas)
 	{
-		
+		NonEmptyFSList next = new NonEmptyFSList(jcas);
+		next.setHead(el);
+		next.setTail(list);
+		return next;
+	}
+	
+	/**
+	 * Finds the first TOP in the FSList list that checks out under Method checkMethod.
+	 * If no such element is matched, returns null.
+	 * 
+	 * @param list the FSList to search for a matching TOP
+	 * @param checkMethod the RTMethod with which to identify matching instances
+	 * @return the matched element (if any), else null
+	 */
+	public static <T> TOP getFromFSList(FSList list, RTMethod checkMethod)
+	{
+		List<TOP> matched = getAllFromFSList(list,checkMethod);
+		if(matched.size() > 0)
+		{
+			return matched.get(0);
+		}
+		return null;
+	}
+	
+	/**
+	 * Finds all TOP in the FSList list that check out under RTMethod checkMethod.
+	 * If no such elements are matched, returns an empty List.
+	 * 
+	 * @param list the FSList to search for matching TOP
+	 * @param checkMethod the RTMethod with which to identify matching instances
+	 * @return a List<TOP> of the matched elements (if any)
+	 */
+	public static <T> List<TOP> getAllFromFSList(FSList list, RTMethod checkMethod)
+	{
+		List<TOP> results = new LinkedList<TOP>();
 		while(list instanceof NonEmptyFSList)
 		{
 			TOP el = (TOP) ((NonEmptyFSList) list).getHead();
 			try
 			{
-				if((Boolean) checkMethod.invoke(el, args))
+				if((Boolean) checkMethod.invoke(el))
 				{
-					return el;
+					results.add(el);
 				}
 			}
 			catch(Throwable e)
@@ -66,14 +118,12 @@ public class TypeUtils {
 			}
 			list = ((NonEmptyFSList) list).getTail();
 		}
-		return null;
+		return results;
 	}
-	
 }
 
-
 /**
- * Clever wrapper class to iterate through elements of list in reverse order
+ * Wrapper class to iterate through elements of list in reverse order
  * 
  * @author John Feminella, Allain Lalonde
  * @param <T>

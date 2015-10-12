@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Mon Oct 05 10:08:06 EDT 2015 */
+/* First created by JCasGen Mon Oct 12 12:04:00 EDT 2015 */
 package type;
 
 import org.apache.uima.jcas.JCas; 
@@ -9,16 +9,16 @@ import org.apache.uima.jcas.cas.TOP_Type;
 
 
 
-/** An annotation which modifies a span (e.g. a tokenization).
+/** Annotation indicating precision at a certain rank for the given test element.
  * Updated by JCasGen Mon Oct 12 12:04:00 EDT 2015
  * XML source: /media/maki/OS/Users/Keith/Documents/CMU/Coursework/11791/PI6/pi6-kmaki/src/main/resources/descriptors/typeSystem.xml
  * @generated */
-public class SpanModification extends Span {
+public class PAtN extends Metric {
   /** @generated
    * @ordered 
    */
   @SuppressWarnings ("hiding")
-  public final static int typeIndexID = JCasRegistry.register(SpanModification.class);
+  public final static int typeIndexID = JCasRegistry.register(PAtN.class);
   /** @generated
    * @ordered 
    */
@@ -32,14 +32,14 @@ public class SpanModification extends Span {
  
   /** Never called.  Disable default constructor
    * @generated */
-  protected SpanModification() {/* intentionally empty block */}
+  protected PAtN() {/* intentionally empty block */}
     
   /** Internal - constructor used by generator 
    * @generated
    * @param addr low level Feature Structure reference
    * @param type the type of this Feature Structure 
    */
-  public SpanModification(int addr, TOP_Type type) {
+  public PAtN(int addr, TOP_Type type) {
     super(addr, type);
     readObject();
   }
@@ -47,7 +47,7 @@ public class SpanModification extends Span {
   /** @generated
    * @param jcas JCas to which this Feature Structure belongs 
    */
-  public SpanModification(JCas jcas) {
+  public PAtN(JCas jcas) {
     super(jcas);
     readObject();   
   } 
@@ -57,7 +57,7 @@ public class SpanModification extends Span {
    * @param begin offset to the begin spot in the SofA
    * @param end offset to the end spot in the SofA 
   */  
-  public SpanModification(JCas jcas, int begin, int end) {
+  public PAtN(JCas jcas, int begin, int end) {
     super(jcas);
     setBegin(begin);
     setEnd(end);
@@ -76,25 +76,25 @@ public class SpanModification extends Span {
  
     
   //*--------------*
-  //* Feature: orig
+  //* Feature: n
 
-  /** getter for orig - gets The original span annotation for this downstream annotation.
+  /** getter for n - gets The rank at which the precision at n was computed.
    * @generated
    * @return value of the feature 
    */
-  public Span getOrig() {
-    if (SpanModification_Type.featOkTst && ((SpanModification_Type)jcasType).casFeat_orig == null)
-      jcasType.jcas.throwFeatMissing("orig", "type.SpanModification");
-    return (Span)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((SpanModification_Type)jcasType).casFeatCode_orig)));}
+  public int getN() {
+    if (PAtN_Type.featOkTst && ((PAtN_Type)jcasType).casFeat_n == null)
+      jcasType.jcas.throwFeatMissing("n", "type.PAtN");
+    return jcasType.ll_cas.ll_getIntValue(addr, ((PAtN_Type)jcasType).casFeatCode_n);}
     
-  /** setter for orig - sets The original span annotation for this downstream annotation. 
+  /** setter for n - sets The rank at which the precision at n was computed. 
    * @generated
    * @param v value to set into the feature 
    */
-  public void setOrig(Span v) {
-    if (SpanModification_Type.featOkTst && ((SpanModification_Type)jcasType).casFeat_orig == null)
-      jcasType.jcas.throwFeatMissing("orig", "type.SpanModification");
-    jcasType.ll_cas.ll_setRefValue(addr, ((SpanModification_Type)jcasType).casFeatCode_orig, jcasType.ll_cas.ll_getFSRef(v));}    
+  public void setN(int v) {
+    if (PAtN_Type.featOkTst && ((PAtN_Type)jcasType).casFeat_n == null)
+      jcasType.jcas.throwFeatMissing("n", "type.PAtN");
+    jcasType.ll_cas.ll_setIntValue(addr, ((PAtN_Type)jcasType).casFeatCode_n, v);}    
   }
 
     

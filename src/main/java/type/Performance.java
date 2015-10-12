@@ -9,9 +9,12 @@ import org.apache.uima.jcas.cas.TOP_Type;
 
 
 
+import org.apache.uima.jcas.cas.FSList;
+
+
 /** Annotates performance of the system on a single test element.
- * Updated by JCasGen Mon Oct 05 15:32:22 EDT 2015
- * XML source: /media/maki/OS/Users/Keith/Documents/CMU/Coursework/11791/PI5/pi5-kmaki/src/main/resources/descriptors/typeSystem.xml
+ * Updated by JCasGen Mon Oct 12 12:04:00 EDT 2015
+ * XML source: /media/maki/OS/Users/Keith/Documents/CMU/Coursework/11791/PI6/pi6-kmaki/src/main/resources/descriptors/typeSystem.xml
  * @generated */
 public class Performance extends ComponentAnnotation {
   /** @generated
@@ -98,91 +101,25 @@ public class Performance extends ComponentAnnotation {
    
     
   //*--------------*
-  //* Feature: pAt1
+  //* Feature: metrics
 
-  /** getter for pAt1 - gets Precision@1 for this Test Element.
+  /** getter for metrics - gets The metrics annotated for the test element.
    * @generated
    * @return value of the feature 
    */
-  public float getPAt1() {
-    if (Performance_Type.featOkTst && ((Performance_Type)jcasType).casFeat_pAt1 == null)
-      jcasType.jcas.throwFeatMissing("pAt1", "type.Performance");
-    return jcasType.ll_cas.ll_getFloatValue(addr, ((Performance_Type)jcasType).casFeatCode_pAt1);}
+  public FSList getMetrics() {
+    if (Performance_Type.featOkTst && ((Performance_Type)jcasType).casFeat_metrics == null)
+      jcasType.jcas.throwFeatMissing("metrics", "type.Performance");
+    return (FSList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((Performance_Type)jcasType).casFeatCode_metrics)));}
     
-  /** setter for pAt1 - sets Precision@1 for this Test Element. 
+  /** setter for metrics - sets The metrics annotated for the test element. 
    * @generated
    * @param v value to set into the feature 
    */
-  public void setPAt1(float v) {
-    if (Performance_Type.featOkTst && ((Performance_Type)jcasType).casFeat_pAt1 == null)
-      jcasType.jcas.throwFeatMissing("pAt1", "type.Performance");
-    jcasType.ll_cas.ll_setFloatValue(addr, ((Performance_Type)jcasType).casFeatCode_pAt1, v);}    
-   
-    
-  //*--------------*
-  //* Feature: pAt5
-
-  /** getter for pAt5 - gets Precision@5 for this Test Element.
-   * @generated
-   * @return value of the feature 
-   */
-  public float getPAt5() {
-    if (Performance_Type.featOkTst && ((Performance_Type)jcasType).casFeat_pAt5 == null)
-      jcasType.jcas.throwFeatMissing("pAt5", "type.Performance");
-    return jcasType.ll_cas.ll_getFloatValue(addr, ((Performance_Type)jcasType).casFeatCode_pAt5);}
-    
-  /** setter for pAt5 - sets Precision@5 for this Test Element. 
-   * @generated
-   * @param v value to set into the feature 
-   */
-  public void setPAt5(float v) {
-    if (Performance_Type.featOkTst && ((Performance_Type)jcasType).casFeat_pAt5 == null)
-      jcasType.jcas.throwFeatMissing("pAt5", "type.Performance");
-    jcasType.ll_cas.ll_setFloatValue(addr, ((Performance_Type)jcasType).casFeatCode_pAt5, v);}    
-   
-    
-  //*--------------*
-  //* Feature: rr
-
-  /** getter for rr - gets Reciprocal rank for this Test Element
-   * @generated
-   * @return value of the feature 
-   */
-  public float getRr() {
-    if (Performance_Type.featOkTst && ((Performance_Type)jcasType).casFeat_rr == null)
-      jcasType.jcas.throwFeatMissing("rr", "type.Performance");
-    return jcasType.ll_cas.ll_getFloatValue(addr, ((Performance_Type)jcasType).casFeatCode_rr);}
-    
-  /** setter for rr - sets Reciprocal rank for this Test Element 
-   * @generated
-   * @param v value to set into the feature 
-   */
-  public void setRr(float v) {
-    if (Performance_Type.featOkTst && ((Performance_Type)jcasType).casFeat_rr == null)
-      jcasType.jcas.throwFeatMissing("rr", "type.Performance");
-    jcasType.ll_cas.ll_setFloatValue(addr, ((Performance_Type)jcasType).casFeatCode_rr, v);}    
-   
-    
-  //*--------------*
-  //* Feature: ap
-
-  /** getter for ap - gets AP for this test element.
-   * @generated
-   * @return value of the feature 
-   */
-  public float getAp() {
-    if (Performance_Type.featOkTst && ((Performance_Type)jcasType).casFeat_ap == null)
-      jcasType.jcas.throwFeatMissing("ap", "type.Performance");
-    return jcasType.ll_cas.ll_getFloatValue(addr, ((Performance_Type)jcasType).casFeatCode_ap);}
-    
-  /** setter for ap - sets AP for this test element. 
-   * @generated
-   * @param v value to set into the feature 
-   */
-  public void setAp(float v) {
-    if (Performance_Type.featOkTst && ((Performance_Type)jcasType).casFeat_ap == null)
-      jcasType.jcas.throwFeatMissing("ap", "type.Performance");
-    jcasType.ll_cas.ll_setFloatValue(addr, ((Performance_Type)jcasType).casFeatCode_ap, v);}    
+  public void setMetrics(FSList v) {
+    if (Performance_Type.featOkTst && ((Performance_Type)jcasType).casFeat_metrics == null)
+      jcasType.jcas.throwFeatMissing("metrics", "type.Performance");
+    jcasType.ll_cas.ll_setRefValue(addr, ((Performance_Type)jcasType).casFeatCode_metrics, jcasType.ll_cas.ll_getFSRef(v));}    
   }
 
     

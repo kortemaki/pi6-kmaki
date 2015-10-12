@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Mon Oct 05 10:08:06 EDT 2015 */
+/* First created by JCasGen Mon Oct 12 12:04:00 EDT 2015 */
 package type;
 
 import org.apache.uima.jcas.JCas;
@@ -12,10 +12,10 @@ import org.apache.uima.cas.Type;
 import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
-/** Annotation holding the ranking scores for each of the passages associated with this Test Element.
+/** Annotation indicating precision at a certain rank for the given test element.
  * Updated by JCasGen Mon Oct 12 12:04:00 EDT 2015
  * @generated */
-public class Scoring_Type extends SpanModification_Type {
+public class PAtN_Type extends Metric_Type {
   /** @generated 
    * @return the generator for this type
    */
@@ -25,47 +25,47 @@ public class Scoring_Type extends SpanModification_Type {
   private final FSGenerator fsGenerator = 
     new FSGenerator() {
       public FeatureStructure createFS(int addr, CASImpl cas) {
-  			 if (Scoring_Type.this.useExistingInstance) {
+  			 if (PAtN_Type.this.useExistingInstance) {
   			   // Return eq fs instance if already created
-  		     FeatureStructure fs = Scoring_Type.this.jcas.getJfsFromCaddr(addr);
+  		     FeatureStructure fs = PAtN_Type.this.jcas.getJfsFromCaddr(addr);
   		     if (null == fs) {
-  		       fs = new Scoring(addr, Scoring_Type.this);
-  			   Scoring_Type.this.jcas.putJfsFromCaddr(addr, fs);
+  		       fs = new PAtN(addr, PAtN_Type.this);
+  			   PAtN_Type.this.jcas.putJfsFromCaddr(addr, fs);
   			   return fs;
   		     }
   		     return fs;
-        } else return new Scoring(addr, Scoring_Type.this);
+        } else return new PAtN(addr, PAtN_Type.this);
   	  }
     };
   /** @generated */
   @SuppressWarnings ("hiding")
-  public final static int typeIndexID = Scoring.typeIndexID;
+  public final static int typeIndexID = PAtN.typeIndexID;
   /** @generated 
      @modifiable */
   @SuppressWarnings ("hiding")
-  public final static boolean featOkTst = JCasRegistry.getFeatOkTst("type.Scoring");
+  public final static boolean featOkTst = JCasRegistry.getFeatOkTst("type.PAtN");
  
   /** @generated */
-  final Feature casFeat_scores;
+  final Feature casFeat_n;
   /** @generated */
-  final int     casFeatCode_scores;
+  final int     casFeatCode_n;
   /** @generated
    * @param addr low level Feature Structure reference
    * @return the feature value 
    */ 
-  public int getScores(int addr) {
-        if (featOkTst && casFeat_scores == null)
-      jcas.throwFeatMissing("scores", "type.Scoring");
-    return ll_cas.ll_getRefValue(addr, casFeatCode_scores);
+  public int getN(int addr) {
+        if (featOkTst && casFeat_n == null)
+      jcas.throwFeatMissing("n", "type.PAtN");
+    return ll_cas.ll_getIntValue(addr, casFeatCode_n);
   }
   /** @generated
    * @param addr low level Feature Structure reference
    * @param v value to set 
    */    
-  public void setScores(int addr, int v) {
-        if (featOkTst && casFeat_scores == null)
-      jcas.throwFeatMissing("scores", "type.Scoring");
-    ll_cas.ll_setRefValue(addr, casFeatCode_scores, v);}
+  public void setN(int addr, int v) {
+        if (featOkTst && casFeat_n == null)
+      jcas.throwFeatMissing("n", "type.PAtN");
+    ll_cas.ll_setIntValue(addr, casFeatCode_n, v);}
     
   
 
@@ -76,13 +76,13 @@ public class Scoring_Type extends SpanModification_Type {
 	 * @param jcas JCas
 	 * @param casType Type 
 	 */
-  public Scoring_Type(JCas jcas, Type casType) {
+  public PAtN_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
 
  
-    casFeat_scores = jcas.getRequiredFeatureDE(casType, "scores", "uima.cas.FSList", featOkTst);
-    casFeatCode_scores  = (null == casFeat_scores) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_scores).getCode();
+    casFeat_n = jcas.getRequiredFeatureDE(casType, "n", "uima.cas.Integer", featOkTst);
+    casFeatCode_n  = (null == casFeat_n) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_n).getCode();
 
   }
 }

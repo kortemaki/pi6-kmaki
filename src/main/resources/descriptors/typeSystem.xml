@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
     <name>typeSystemDescriptor</name>
-    <description>This typesystem describes the relevant classes necessary for the pi5-kmaki annotation and evaluation engine frameworks.</description>
+    <description>This typesystem describes the relevant classes necessary for the pi6-kmaki annotation and evaluation engine frameworks.</description>
     <version>1.0</version>
     <vendor/>
   <types>
@@ -220,24 +220,39 @@
           <rangeTypeName>type.TestElementAnnotation</rangeTypeName>
         </featureDescription>
         <featureDescription>
-          <name>pAt1</name>
-          <description>Precision@1 for this Test Element.</description>
+          <name>metrics</name>
+          <description>The metrics annotated for the test element.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+        <elementType>Metric</elementType>
+        </featureDescription>
+        </features>
+    </typeDescription>
+  <typeDescription>
+      <name>type.PAtN</name>
+      <description>Annotation indicating precision at a certain rank for the given test element.</description>
+      <supertypeName>type.Metric</supertypeName>
+      <features>
+        <featureDescription>
+          <name>n</name>
+          <description>The rank at which the precision at n was computed.</description>
+          <rangeTypeName>uima.cas.Integer</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>type.Metric</name>
+      <description>Annotation indicating the performance of the system on some test element under a certain metric.</description>
+      <supertypeName>type.ComponentAnnotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>value</name>
+          <description>The value of the system evaluated on the current test element under the metric.</description>
           <rangeTypeName>uima.cas.Float</rangeTypeName>
         </featureDescription>
         <featureDescription>
-          <name>pAt5</name>
-          <description>Precision@5 for this Test Element.</description>
-          <rangeTypeName>uima.cas.Float</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>rr</name>
-          <description>Reciprocal rank for this Test Element</description>
-          <rangeTypeName>uima.cas.Float</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>ap</name>
-          <description>AP for this test element.</description>
-          <rangeTypeName>uima.cas.Float</rangeTypeName>
+          <name>metricName</name>
+          <description>String naming the metric used to evaluate the system on the test element.</description>
+          <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
       </features>
     </typeDescription>

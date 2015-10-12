@@ -1,5 +1,6 @@
 package annotators;
 import java.util.ArrayList;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -12,15 +13,20 @@ import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.CASException;
 import org.apache.uima.cas.FSIndex;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.EmptyFSList;
 import org.apache.uima.jcas.cas.FSList;
 import org.apache.uima.jcas.cas.NonEmptyFSList;
 
+import type.Metric;
+import type.PAtN;
 import type.Passage;
 import type.Performance;
 import type.Question;
 import type.ScoredSpan;
 import type.Scoring;
 import type.TestElementAnnotation;
+
+import util.TypeUtils;
 
 public class PerformanceAnnotator extends CasAnnotator_ImplBase  
 {
@@ -48,10 +54,44 @@ public class PerformanceAnnotator extends CasAnnotator_ImplBase
 			
 			List<Boolean> correct = getCorrection(score);
 			
-			performance.setPAt1(precisionAtN(correct, 1));
-			performance.setPAt5(precisionAtN(correct, 5));
-			performance.setRr(reciprocalRank(correct));
-			performance.setAp(averagePrecision(correct));
+			//////////////////////
+			// Performance Metrics
+			performance.setMetrics(new EmptyFSList(jcas));
+			
+			//Precision at 1
+			PAtN pAt1 = new PAtN(jcas);
+			pAt1.setN(1);
+			pAt1.setValue(precisionAtN(correct, 1));
+			pAt1.setMetricName("Precision at 1.");
+			pAt1.setComponentId(this.getClass().getName());
+			pAt1.addToIndexes();
+			performance.setMetrics(TypeUtils.addToFSList(performance.getMetrics(),pAt1,jcas));
+			
+			//Precision at 5
+			PAtN pAt5 = new PAtN(jcas);
+			pAt5.setN(5);
+			pAt5.setValue(precisionAtN(correct, 5));
+			pAt5.setMetricName("Precision at 5.");
+			pAt5.setComponentId(this.getClass().getName());
+			pAt1.addToIndexes();
+			performance.setMetrics(TypeUtils.addToFSList(performance.getMetrics(),pAt5,jcas));
+			
+			//Reciprocal rank
+			Metric rr = new Metric(jcas);
+			rr.setValue(reciprocalRank(correct));
+			rr.setMetricName("Reciprocal rank.");
+			rr.setComponentId(this.getClass().getName());
+			rr.addToIndexes();
+			performance.setMetrics(TypeUtils.addToFSList(performance.getMetrics(),rr,jcas));
+			
+			//Average Precision
+			Metric ap = new Metric(jcas);
+			ap.setValue(averagePrecision(correct));
+			ap.setMetricName("Average precision.");
+			ap.setComponentId(this.getClass().getName());
+			ap.addToIndexes();
+			performance.setMetrics(TypeUtils.addToFSList(performance.getMetrics(),ap,jcas));
+			
 			performance.setComponentId(this.getClass().getName());
 			performance.addToIndexes();
 		}		

@@ -10,8 +10,8 @@ import org.apache.uima.jcas.cas.TOP_Type;
 
 
 /** Component Annotation with a text field to identify the relevant text of the annotated span.
- * Updated by JCasGen Mon Oct 05 15:32:22 EDT 2015
- * XML source: /media/maki/OS/Users/Keith/Documents/CMU/Coursework/11791/PI5/pi5-kmaki/src/main/resources/descriptors/typeSystem.xml
+ * Updated by JCasGen Mon Oct 12 12:04:00 EDT 2015
+ * XML source: /media/maki/OS/Users/Keith/Documents/CMU/Coursework/11791/PI6/pi6-kmaki/src/main/resources/descriptors/typeSystem.xml
  * @generated */
 public class Span extends ComponentAnnotation {
   /** @generated
