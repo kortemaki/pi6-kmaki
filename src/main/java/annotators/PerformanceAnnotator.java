@@ -1,6 +1,5 @@
 package annotators;
 import java.util.ArrayList;
-
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -25,7 +24,6 @@ import type.Question;
 import type.ScoredSpan;
 import type.Scoring;
 import type.TestElementAnnotation;
-
 import util.TypeUtils;
 
 public class PerformanceAnnotator extends CasAnnotator_ImplBase  
@@ -94,6 +92,8 @@ public class PerformanceAnnotator extends CasAnnotator_ImplBase
 			
 			performance.setComponentId(this.getClass().getName());
 			performance.addToIndexes();
+
+			System.out.println("    Computed metrics for document " + ((TestElementAnnotation) score.getOrig()).getQuestion().getId() + ".");
 		}		
 	}
 	

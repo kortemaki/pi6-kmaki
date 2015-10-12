@@ -5,7 +5,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.CASException;
 import org.apache.uima.cas.FSIndex;
@@ -83,6 +82,7 @@ public class RandomizedSubsetWriter extends CasConsumer_ImplBase {
     } finally {
       if (writer != null)
         writer.close();
+      System.out.println("done.");
     }
   }
 }

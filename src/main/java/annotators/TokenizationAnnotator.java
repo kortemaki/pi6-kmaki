@@ -86,6 +86,7 @@ public class TokenizationAnnotator extends CasAnnotator_ImplBase {
 			annot.setOrig(te);
 			annot.setComponentId(this.getClass().getName());
 			annot.addToIndexes();
+			System.out.println("    Tokenized document " + question.getId() + ".");
 		}
 	}
 

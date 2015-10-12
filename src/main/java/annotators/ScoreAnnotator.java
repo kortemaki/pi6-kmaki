@@ -29,12 +29,14 @@ import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.jcas.cas.FSList;
 import org.apache.uima.jcas.cas.NonEmptyFSList;
 import org.apache.uima.jcas.tcas.Annotation;
+
 import type.Ngram;
 import type.NgramAnnotation;
 import type.NgramSet;
 import type.ScoredSpan;
 import type.Scoring;
 import type.Span;
+import type.TestElementAnnotation;
 
 /**
  * A simple scoring annotator for PI3.
@@ -102,6 +104,7 @@ public class ScoreAnnotator extends CasAnnotator_ImplBase {
 			output.setOrig(ngramAnnot.getOrig());
 			output.setComponentId(this.getClass().getName());	
 			output.addToIndexes();
+			System.out.println("    Scored document " +  ((TestElementAnnotation) ngramAnnot.getOrig()).getQuestion().getId() + ".");
 		}
 	}
 

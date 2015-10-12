@@ -140,6 +140,8 @@ public class OutputAnnotator extends CasAnnotator_ImplBase {
 			output.setText((performance.getTestElement()).getQuestion().getId());
 			output.setOutput(text);
 			output.addToIndexes();
+			
+			System.out.println("Finished output for document " + question.getId() + ".");
 		}
 	}
 }

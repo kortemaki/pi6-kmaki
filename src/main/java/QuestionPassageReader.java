@@ -168,6 +168,8 @@ public class QuestionPassageReader extends CollectionReader_ImplBase {
 		srcDocInfo.setDocumentSize(text.length());
 		srcDocInfo.setLastSegment(!this.hasNext());
 		srcDocInfo.addToIndexes();
+
+		System.out.println("  Retrieved document " + qnum + " from collection.");
 	}
 
 	public void close() throws IOException {
