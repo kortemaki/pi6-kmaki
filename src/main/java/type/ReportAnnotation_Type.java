@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Mon Oct 05 10:45:47 EDT 2015 */
+/* First created by JCasGen Mon Oct 12 20:48:05 EDT 2015 */
 package type;
 
 import org.apache.uima.jcas.JCas;
@@ -12,10 +12,10 @@ import org.apache.uima.cas.Type;
 import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
-/** Annotates performance of the system on a single test element.
- * Updated by JCasGen Mon Oct 12 20:41:17 EDT 2015
+/** An annotation which summarizes the system's performance with respect to a test element.
+ * Updated by JCasGen Mon Oct 12 20:48:05 EDT 2015
  * @generated */
-public class Performance_Type extends ComponentAnnotation_Type {
+public class ReportAnnotation_Type extends ComponentAnnotation_Type {
   /** @generated 
    * @return the generator for this type
    */
@@ -25,25 +25,25 @@ public class Performance_Type extends ComponentAnnotation_Type {
   private final FSGenerator fsGenerator = 
     new FSGenerator() {
       public FeatureStructure createFS(int addr, CASImpl cas) {
-  			 if (Performance_Type.this.useExistingInstance) {
+  			 if (ReportAnnotation_Type.this.useExistingInstance) {
   			   // Return eq fs instance if already created
-  		     FeatureStructure fs = Performance_Type.this.jcas.getJfsFromCaddr(addr);
+  		     FeatureStructure fs = ReportAnnotation_Type.this.jcas.getJfsFromCaddr(addr);
   		     if (null == fs) {
-  		       fs = new Performance(addr, Performance_Type.this);
-  			   Performance_Type.this.jcas.putJfsFromCaddr(addr, fs);
+  		       fs = new ReportAnnotation(addr, ReportAnnotation_Type.this);
+  			   ReportAnnotation_Type.this.jcas.putJfsFromCaddr(addr, fs);
   			   return fs;
   		     }
   		     return fs;
-        } else return new Performance(addr, Performance_Type.this);
+        } else return new ReportAnnotation(addr, ReportAnnotation_Type.this);
   	  }
     };
   /** @generated */
   @SuppressWarnings ("hiding")
-  public final static int typeIndexID = Performance.typeIndexID;
+  public final static int typeIndexID = ReportAnnotation.typeIndexID;
   /** @generated 
      @modifiable */
   @SuppressWarnings ("hiding")
-  public final static boolean featOkTst = JCasRegistry.getFeatOkTst("type.Performance");
+  public final static boolean featOkTst = JCasRegistry.getFeatOkTst("type.ReportAnnotation");
  
   /** @generated */
   final Feature casFeat_testElement;
@@ -55,7 +55,7 @@ public class Performance_Type extends ComponentAnnotation_Type {
    */ 
   public int getTestElement(int addr) {
         if (featOkTst && casFeat_testElement == null)
-      jcas.throwFeatMissing("testElement", "type.Performance");
+      jcas.throwFeatMissing("testElement", "type.ReportAnnotation");
     return ll_cas.ll_getRefValue(addr, casFeatCode_testElement);
   }
   /** @generated
@@ -64,7 +64,7 @@ public class Performance_Type extends ComponentAnnotation_Type {
    */    
   public void setTestElement(int addr, int v) {
         if (featOkTst && casFeat_testElement == null)
-      jcas.throwFeatMissing("testElement", "type.Performance");
+      jcas.throwFeatMissing("testElement", "type.ReportAnnotation");
     ll_cas.ll_setRefValue(addr, casFeatCode_testElement, v);}
     
   
@@ -79,7 +79,7 @@ public class Performance_Type extends ComponentAnnotation_Type {
    */ 
   public int getMetrics(int addr) {
         if (featOkTst && casFeat_metrics == null)
-      jcas.throwFeatMissing("metrics", "type.Performance");
+      jcas.throwFeatMissing("metrics", "type.ReportAnnotation");
     return ll_cas.ll_getRefValue(addr, casFeatCode_metrics);
   }
   /** @generated
@@ -88,7 +88,7 @@ public class Performance_Type extends ComponentAnnotation_Type {
    */    
   public void setMetrics(int addr, int v) {
         if (featOkTst && casFeat_metrics == null)
-      jcas.throwFeatMissing("metrics", "type.Performance");
+      jcas.throwFeatMissing("metrics", "type.ReportAnnotation");
     ll_cas.ll_setRefValue(addr, casFeatCode_metrics, v);}
     
   
@@ -100,7 +100,7 @@ public class Performance_Type extends ComponentAnnotation_Type {
 	 * @param jcas JCas
 	 * @param casType Type 
 	 */
-  public Performance_Type(JCas jcas, Type casType) {
+  public ReportAnnotation_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
 

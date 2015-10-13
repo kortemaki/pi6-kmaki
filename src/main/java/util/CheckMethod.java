@@ -2,7 +2,6 @@ package util;
 
 import java.lang.reflect.Method;
 
-import org.apache.uima.jcas.cas.TOP;
 
 public class CheckMethod {
 	/**
@@ -12,8 +11,10 @@ public class CheckMethod {
 	 * @author maki
 	 */
 	private Method method;
+	@SuppressWarnings("rawtypes")
 	private Comparable value;
 		
+	@SuppressWarnings("rawtypes")
 	public CheckMethod(Method method, Comparable value)
 	{
 		this.method = method;
@@ -38,7 +39,6 @@ public class CheckMethod {
 	}
 
 	public Class<?> getReturnType() {
-		// TODO Auto-generated method stub
 		return this.method.getReturnType();
 	}
 }

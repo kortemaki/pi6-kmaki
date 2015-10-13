@@ -210,24 +210,6 @@
         </features>
     </typeDescription>
   <typeDescription>
-      <name>type.Performance</name>
-      <description>Annotates performance of the system on a single test element.</description>
-      <supertypeName>type.ComponentAnnotation</supertypeName>
-      <features>
-        <featureDescription>
-          <name>testElement</name>
-          <description>The test element annotated with this performance.</description>
-          <rangeTypeName>type.TestElementAnnotation</rangeTypeName>
-        </featureDescription>
-        <featureDescription>
-          <name>metrics</name>
-          <description>The metrics annotated for the test element.</description>
-          <rangeTypeName>uima.cas.FSList</rangeTypeName>
-        <elementType>Metric</elementType>
-        </featureDescription>
-        </features>
-    </typeDescription>
-  <typeDescription>
       <name>type.PAtN</name>
       <description>Annotation indicating precision at a certain rank for the given test element.</description>
       <supertypeName>type.Metric</supertypeName>
@@ -255,6 +237,61 @@
           <rangeTypeName>uima.cas.String</rangeTypeName>
         </featureDescription>
       </features>
+    </typeDescription>
+    <typeDescription>
+      <name>type.ConfMatrix</name>
+      <description>The information about the confusion matrix for the given test element.</description>
+      <supertypeName>type.Metric</supertypeName>
+      <features>
+        <featureDescription>
+          <name>tp</name>
+          <description>True positives score for the given test element.</description>
+          <rangeTypeName>type.Metric</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>tn</name>
+          <description>True negatives score for the given test element.</description>
+          <rangeTypeName>type.Metric</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>fp</name>
+          <description>False positives score for the given Test Element.</description>
+          <rangeTypeName>type.Metric</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>fn</name>
+          <description>False negatives score for the given test element.</description>
+          <rangeTypeName>type.Metric</rangeTypeName>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>type.ReportAnnotation</name>
+      <description>An annotation which summarizes the system's performance with respect to a test element.</description>
+      <supertypeName>type.ComponentAnnotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>testElement</name>
+          <description>The test element referred to by this report.</description>
+          <rangeTypeName>type.TestElementAnnotation</rangeTypeName>
+        </featureDescription>
+        <featureDescription>
+          <name>metrics</name>
+          <description>The metrics associated with the given report.</description>
+          <rangeTypeName>uima.cas.FSList</rangeTypeName>
+          <elementType>type.Metric</elementType>
+        </featureDescription>
+      </features>
+    </typeDescription>
+    <typeDescription>
+      <name>type.PerformanceAnnotation</name>
+      <description>Report Annotation summarizing the performance of the system on a single test element.</description>
+      <supertypeName>type.ReportAnnotation</supertypeName>
+    </typeDescription>
+    <typeDescription>
+      <name>type.ErrorAnalysisAnnotation</name>
+      <description>ReportAnnotation summarizing the system's performance on a test element with respect to error analysis.</description>
+      <supertypeName>type.ReportAnnotation</supertypeName>
     </typeDescription>
   </types>
 </typeSystemDescription>

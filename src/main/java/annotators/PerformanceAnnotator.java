@@ -1,11 +1,5 @@
 package annotators;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.apache.uima.analysis_component.CasAnnotator_ImplBase;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.CAS;
@@ -13,18 +7,14 @@ import org.apache.uima.cas.CASException;
 import org.apache.uima.cas.FSIndex;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.EmptyFSList;
-import org.apache.uima.jcas.cas.FSList;
-import org.apache.uima.jcas.cas.NonEmptyFSList;
-
 import type.Metric;
 import type.PAtN;
-import type.Passage;
 import type.Performance;
 import type.Question;
-import type.ScoredSpan;
 import type.Scoring;
 import type.TestElementAnnotation;
 import util.TypeUtils;
+import util.AnalysisUtils;
 
 public class PerformanceAnnotator extends CasAnnotator_ImplBase  
 {
@@ -50,16 +40,16 @@ public class PerformanceAnnotator extends CasAnnotator_ImplBase
 			performance.setBegin(question.getBegin());
 			performance.setEnd(question.getEnd());
 			
-			List<Boolean> correct = getCorrection(score);
-			
 			//////////////////////
 			// Performance Metrics
 			performance.setMetrics(new EmptyFSList(jcas));
 			
+			List<Boolean> correct = AnalysisUtils.getCorrection(score);			
+			
 			//Precision at 1
 			PAtN pAt1 = new PAtN(jcas);
 			pAt1.setN(1);
-			pAt1.setValue(precisionAtN(correct, 1));
+			pAt1.setValue(AnalysisUtils.precisionAtN(correct, 1));
 			pAt1.setMetricName("Precision at 1.");
 			pAt1.setComponentId(this.getClass().getName());
 			pAt1.addToIndexes();
@@ -68,15 +58,15 @@ public class PerformanceAnnotator extends CasAnnotator_ImplBase
 			//Precision at 5
 			PAtN pAt5 = new PAtN(jcas);
 			pAt5.setN(5);
-			pAt5.setValue(precisionAtN(correct, 5));
+			pAt5.setValue(AnalysisUtils.precisionAtN(correct, 5));
 			pAt5.setMetricName("Precision at 5.");
 			pAt5.setComponentId(this.getClass().getName());
-			pAt1.addToIndexes();
+			pAt5.addToIndexes();
 			performance.setMetrics(TypeUtils.addToFSList(performance.getMetrics(),pAt5,jcas));
 			
 			//Reciprocal rank
 			Metric rr = new Metric(jcas);
-			rr.setValue(reciprocalRank(correct));
+			rr.setValue(AnalysisUtils.reciprocalRank(correct));
 			rr.setMetricName("Reciprocal rank.");
 			rr.setComponentId(this.getClass().getName());
 			rr.addToIndexes();
@@ -84,7 +74,7 @@ public class PerformanceAnnotator extends CasAnnotator_ImplBase
 			
 			//Average Precision
 			Metric ap = new Metric(jcas);
-			ap.setValue(averagePrecision(correct));
+			ap.setValue(AnalysisUtils.averagePrecision(correct));
 			ap.setMetricName("Average precision.");
 			ap.setComponentId(this.getClass().getName());
 			ap.addToIndexes();
@@ -95,135 +85,5 @@ public class PerformanceAnnotator extends CasAnnotator_ImplBase
 
 			System.out.println("    Computed metrics for document " + ((TestElementAnnotation) score.getOrig()).getQuestion().getId() + ".");
 		}		
-	}
-	
-	/**
-	 * Returns the reciprocal of the smallest rank which gives a correct score
-	 * If no scores are correct, returns the reciprocal of one plus the number of ranks.
-	 * 
-	 * @param scores - list of values true or false indicating whether the ranking was correct or not 
-	 * @return the reciprocal of the smallest correct rank, or one plus the number of ranks
-	 */
-	private static float reciprocalRank(List<Boolean> scores)
-	{
-		int index = 1;
-		boolean sawCorrect = false;
-		for(Boolean score : scores)
-		{
-			sawCorrect |= score;
-			if(score)
-				break;
-			index++;
-		}
-		return sawCorrect ? ((float)1.0)/(index) : 0;
-	
-	}
-	
-	private static float averagePrecision(List<Boolean> scores)
-	{
-		float total = 0;
-		for(int n=1; n <= scores.size(); n++)
-		{
-			total += precisionAtN(scores,n);
-		}
-		return ((float) total)/((float) scores.size());
-	}
-	
-	private static float precisionAtN(List<Boolean> scores, int n)
-	{		
-		return countFirstN(scores, n)/n;
-	}
-	
-	private static List<Boolean> getCorrection(Scoring scoring)
-	{
-		FSList nextScore = scoring.getScores();
-		List<Boolean> labels = new ArrayList<Boolean>();
-		List<Double> scores = new ArrayList<Double>();
-		while(nextScore instanceof NonEmptyFSList)
-		{
-			ScoredSpan passage = (ScoredSpan) ((NonEmptyFSList) nextScore).getHead();
-			boolean label = ((Passage) passage.getOrig()).getLabel();
-			double score = passage.getScore();
-			labels.add(label);
-			scores.add(score);
-			nextScore = ((NonEmptyFSList) nextScore).getTail();
-		}
-		concurrentSort(scores,labels);
-		return labels;
-	}
-	
-	/**
-	 * Auxiliary method to sum the values in a list of doubles which are coindexed to a boolean value True in a list of booleans
-	 * 
-	 * @param values - The values to sum
-	 * @param labels - The boolean filter condition
-	 * @param n - The maximum number of values to consider
-	 * @return The sum of the first n values, filtered by True labels
-	 */
-	private static float countFirstN(List<Boolean> values, int n)
-	{
-		float sum = 0;
-		for(int i=0; i<values.size() && i<n; i++)
-		{
-			if(values.get(i))
-				sum++;
-		}
-		return sum;
-	}
-	
-	/**
-	 * Concurrent sort code from https://ideone.com/u2OICl
-	 * Published to stackoverflow.com by user bcorso
-	 * 
-	 * Performs an in-place (destructive) sort on a list of array lists.  
-	 * The keylist is unchanged (unless it is passed as one of the lists)
-	 * 
-	 * @param key: the list of comparable keys on which to sort
-	 * @param lists: the coindexed set of lists to sort
-	 */
-	public static <T extends Comparable<T>> void concurrentSort( final List<T> key, List<?>... lists)
-	{
-        // Do validation
-        if(key == null || lists == null)
-        	throw new NullPointerException("key cannot be null.");
- 
-        for(List<?> list : lists)
-        	if(list.size() != key.size())
-        		throw new IllegalArgumentException("all lists must be the same size");
- 
-        // Lists are size 0 or 1, nothing to sort
-        if(key.size() < 2)
-        	return;
- 
-        // Create a List of indices
-		List<Integer> indices = new ArrayList<Integer>();
-		for(int i = 0; i < key.size(); i++)
-			indices.add(i);
- 
-        // Sort the indices list based on the key
-		Collections.sort(indices, new Comparator<Integer>()
-		{
-			public int compare(Integer i, Integer j) 
-			{
-				return key.get(i).compareTo(key.get(j));
-			}
-		});
- 
-		Map<Integer, Integer> swapMap = new HashMap<Integer, Integer>(indices.size());
- 
-        // create a mapping that allows sorting of the List by N swaps.
-		for(int i = 0; i < indices.size(); i++)
-		{
-			int k = indices.get(i);
-			while(swapMap.containsKey(k))
-				k = swapMap.get(k);
- 
-			swapMap.put(i, k);
-		}
- 
-        // for each list, swap elements to sort according to key list
-        for(Map.Entry<Integer, Integer> e : swapMap.entrySet())
-			for(List<?> list : lists)
-				Collections.swap(list, e.getKey(), e.getValue());
 	}
 }

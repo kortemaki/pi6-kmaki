@@ -13,7 +13,7 @@ import org.apache.uima.jcas.cas.FSList;
 
 
 /** Annotates performance of the system on a single test element.
- * Updated by JCasGen Mon Oct 12 12:04:00 EDT 2015
+ * Updated by JCasGen Mon Oct 12 20:41:17 EDT 2015
  * XML source: /media/maki/OS/Users/Keith/Documents/CMU/Coursework/11791/PI6/pi6-kmaki/src/main/resources/descriptors/typeSystem.xml
  * @generated */
 public class Performance extends ComponentAnnotation {

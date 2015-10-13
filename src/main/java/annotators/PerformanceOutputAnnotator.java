@@ -19,9 +19,6 @@
 
 package annotators;
 
-import java.lang.reflect.Method;
-
-import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_component.CasAnnotator_ImplBase;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.cas.CAS;
@@ -35,9 +32,8 @@ import type.OutputAnnotation;
 import type.PAtN;
 import type.Performance;
 import type.Question;
-import util.CheckMethod;
+import util.AnalysisUtils;
 import util.TypeUtils;
-import util.TOPWrapper;
 
 /**
  * A simple scoring annotator for PI3.
@@ -48,48 +44,7 @@ import util.TOPWrapper;
  * This annotator has no parameters and requires no initialization method.
  */
 
-public class OutputAnnotator extends CasAnnotator_ImplBase {	
-	
-	Method getName;
-	Method getN;
-	
-	CheckMethod hasN1;
-	CheckMethod hasNamePAt1;
-	CheckMethod[] isPAt1;
-	
-	CheckMethod hasN5;
-	CheckMethod hasNamePAt5;
-	CheckMethod[] isPAt5;
-	
-	CheckMethod hasNameRR;
-	CheckMethod[] isRR;
-	
-	CheckMethod hasNameAP;
-	CheckMethod[] isAP;
-	
-	@Override
-	public void initialize(UimaContext aContext)
-	{	
-		
-		System.out.print("Initializing Output Annotator... ");
-		getName = TypeUtils.instantiateMethod(PAtN.class, "getMetricName");
-        getN = TypeUtils.instantiateMethod(PAtN.class, "getN");
-        
-        hasN1 = new CheckMethod(getN, 1);
-        hasNamePAt1 = new CheckMethod(getName, "Precision at 1.");
-        isPAt1 = new CheckMethod[]{hasN1, hasNamePAt1};
-        
-        hasN5 = new CheckMethod(getN, 5);
-        hasNamePAt5 = new CheckMethod(getName, "Precision at 5.");
-        isPAt5 = new CheckMethod[]{hasN5, hasNamePAt5};
-        
-        hasNameRR = new CheckMethod(getName, "Reciprocal rank.");
-        isRR = new CheckMethod[]{hasNameRR};
-        
-        hasNameAP = new CheckMethod(getName, "AveragePrecision");
-        isAP = new CheckMethod[]{hasNameAP};
-        System.out.println("done.");
-	}
+public class PerformanceOutputAnnotator extends CasAnnotator_ImplBase {
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void process(CAS aCas) throws AnalysisEngineProcessException {
@@ -115,24 +70,8 @@ public class OutputAnnotator extends CasAnnotator_ImplBase {
 	        // Extract performance metrics of interest
 	        FSList metrics = performance.getMetrics();
 	        
-	        if(isPAt1 == null)
-	        {
-	        	System.out.println("**********************NULL isPAt1************************");
-	        }
-	        if(isPAt5 == null)
-	        {
-	        	System.out.println("**********************NULL isPAt5************************");
-	        }
-	        if(isRR == null)
-	        {
-	        	System.out.println("***********************NULL isRR*************************");
-	        }
-	        if(isAP == null)
-	        {
-	        	System.out.println("***********************NULL isAP*************************");
-	        }
 	        // Precision@1
-	        PAtN pat1 = ((PAtN) TypeUtils.getFromFSList(metrics,PAtN.class,hasN1));
+	        PAtN pat1 = ((PAtN) TypeUtils.getFromFSList(metrics,PAtN.class,AnalysisUtils.hasN1));
 	        float pAt1 = (float) 0;
 	        if(pat1 != null)
 	        {
@@ -145,7 +84,7 @@ public class OutputAnnotator extends CasAnnotator_ImplBase {
 	        }
 	        
 	        //Precision@5 
-	        PAtN pat5 = ((PAtN) TypeUtils.getFromFSList(metrics,PAtN.class,isPAt5));
+	        PAtN pat5 = ((PAtN) TypeUtils.getFromFSList(metrics,PAtN.class,AnalysisUtils.isPAt5));
 	        float pAt5 = (float) 0;
 	        if(pat5 != null)
 	        {
@@ -158,11 +97,11 @@ public class OutputAnnotator extends CasAnnotator_ImplBase {
 	        }
 	        
 	        //Reciprocal Rank
-	        float rr = ((Metric) TypeUtils.getFromFSList(metrics,Metric.class,isRR)).getValue();
+	        float rr = ((Metric) TypeUtils.getFromFSList(metrics,Metric.class,AnalysisUtils.isRR)).getValue();
 	        System.out.println("      Finished rr output for document " + question.getId() + ".");
 	        
 	        //Average Precision
-	        float ap = ((Metric) TypeUtils.getFromFSList(metrics,Metric.class,isAP)).getValue();
+	        float ap = ((Metric) TypeUtils.getFromFSList(metrics,Metric.class,AnalysisUtils.isAP)).getValue();
 	        System.out.println("      Finished ap output for document " + question.getId() + ".");
 	        
 	        String text = String.format("%s,%.3f,%.3f,%.3f,%.3f", question.getId(), pAt1, pAt5, rr, ap);	        
