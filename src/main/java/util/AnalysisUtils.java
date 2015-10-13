@@ -199,7 +199,7 @@ public class AnalysisUtils {
 		fp.setMetricName("False positives");
 		fp.setComponentId(AnalysisUtils.class.getName());
 		fp.addToIndexes();
-		mat.setTp(fp);
+		mat.setFp(fp);
 		
 		
 		//False negatives
@@ -218,7 +218,7 @@ public class AnalysisUtils {
 		tn.setMetricName("True negatives");
 		tn.setComponentId(AnalysisUtils.class.getName());
 		tn.addToIndexes();
-		mat.setFn(tn);
+		mat.setTn(tn);
 		
 		mat.setComponentId(AnalysisUtils.class.getName());
 		mat.setValue(CUTOFF);

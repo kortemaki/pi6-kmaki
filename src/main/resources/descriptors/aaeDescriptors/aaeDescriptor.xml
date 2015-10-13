@@ -20,7 +20,7 @@
     <flowConstraints>
       <fixedFlow>
         <node>analysisEngineDescriptor</node>
-        <node>evaluationEngine</node>
+        <node>errorAnalysisEngine</node>
       </fixedFlow>
     </flowConstraints>
     <typePriorities/>
