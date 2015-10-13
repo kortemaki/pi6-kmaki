@@ -3,24 +3,24 @@
   <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
   <primitive>false</primitive>  
   <delegateAnalysisEngineSpecifiers>
-    <delegateAnalysisEngine key="analysisEngineDescriptor">
-      <import name="descriptors.aaeDescriptors.analysisEngineDescriptor"/>
+    <delegateAnalysisEngine key="ErrorAnalysisAnnotator">
+      <import name="descriptors.annotatorDescriptors.ErrorAnalysisAnnotator"/>
     </delegateAnalysisEngine>
-    <delegateAnalysisEngine key="errorAnalysisEngine">
-      <import name="descriptors.aaeDescriptors.errorAnalysisEngineDescriptor"/>
+    <delegateAnalysisEngine key="ErrorAnalysisOutputAnnotator">
+      <import name="descriptors.annotatorDescriptors.ErrorAnalysisOutputAnnotator"/>
     </delegateAnalysisEngine>
   </delegateAnalysisEngineSpecifiers>
   <analysisEngineMetaData>
-    <name>aaeDescriptor</name>
-    <description>The Aggregate Analysis Engine for pi6-kmaki.  Chains the analysis and error analysis aaes in sequence in order to analyze performance of the analysis system.</description>
+    <name>ErrorAnalysisEngineDescriptor</name>
+    <description>Analysis engine for pi6-kmaki.  Handles the computation of error statistics for each test element such as precision, recall, and f-measure.</description>
     <version>1.0</version>
     <vendor/>
     <configurationParameters/>
     <configurationParameterSettings/>
     <flowConstraints>
       <fixedFlow>
-        <node>analysisEngineDescriptor</node>
-        <node>evaluationEngine</node>
+        <node>ErrorAnalysisAnnotator</node>
+        <node>ErrorAnalysisOutputAnnotator</node>
       </fixedFlow>
     </flowConstraints>
     <typePriorities/>
