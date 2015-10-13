@@ -42,6 +42,8 @@ public class AnalysisUtils {
 	public static CheckMethod hasNameAP = new CheckMethod(getName, "Average precision");
 	public static CheckMethod[] isAP = new CheckMethod[]{hasNameAP};
 	
+	public static CheckMethod isConfMat = new CheckMethod(getName, "Confusion matrix");
+	
 	public static CheckMethod isPrecision = new CheckMethod(getName, "Precision");
 	public static CheckMethod isRecall = new CheckMethod(getName, "Recall");
 	public static CheckMethod isF1Meas = new CheckMethod(getName, "F1-score");

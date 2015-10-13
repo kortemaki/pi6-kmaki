@@ -1,7 +1,5 @@
 package util;
 
-import java.lang.reflect.Method;
-
 import org.apache.uima.jcas.cas.TOP;
 
 import type.PAtN;
