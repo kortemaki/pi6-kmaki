@@ -19,6 +19,9 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.util.FileUtils;
 import org.apache.uima.util.Progress;
 
+import type.OutputAnnotation;
+import util.RandomUtils;
+
 /**
  * Serves as a reader to parse input.
  * 
@@ -117,7 +120,9 @@ public class QuestionPassageReader extends CollectionReader_ImplBase {
 			}
 		}
 		
-		this.questionIterator = questions.keySet().iterator();
+		List<String> subsetOfQuestions = RandomUtils.getRandomSubset(new ArrayList<String>(questions.keySet()), 10);
+		
+		this.questionIterator = subsetOfQuestions.iterator();
 	}	
 	
 	private boolean isQuestion(String line) {

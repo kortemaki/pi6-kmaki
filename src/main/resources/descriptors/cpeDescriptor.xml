@@ -30,7 +30,7 @@
     </casProcessor>
     <casProcessor deployment="integrated" name="PassageRankingWriter">
         <descriptor>
-            <import location="casConsumerDescriptors/RandomizedSubsetWriterDescriptor.xml"/>
+            <import location="casConsumerDescriptors/OutputWriterDescriptor.xml"/>
         </descriptor>
             <deploymentParameters/>
         <errorHandling>
@@ -45,6 +45,12 @@
                 <value>
                     <string>/media/maki/OS/Users/Keith/Documents/CMU/Coursework/11791/PI6/pi6-kmaki/src/main/resources/outputData</string>
                 </value>
+            </nameValuePair>
+            <nameValuePair>
+            	<name>OutputHeader</name>
+            	<value>
+            		<string>question_id,tp,fn,fp,precision,recall,f1</string>
+            	</value>
             </nameValuePair>
         </configurationParameterSettings>
     </casProcessor>

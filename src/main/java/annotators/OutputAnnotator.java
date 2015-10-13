@@ -51,28 +51,19 @@ import util.TOPWrapper;
 public class OutputAnnotator extends CasAnnotator_ImplBase {	
 	
 	Method getName;
-	Method compField;
-	CheckMethod isMetric;
-	CheckMethod isPAtN;
 	Method getN;
 	
-	CheckMethod IntEq1;
 	CheckMethod hasN1;
-	CheckMethod stringEqPAt1;
 	CheckMethod hasNamePAt1;
 	CheckMethod[] isPAt1;
 	
-	CheckMethod IntEq5;
 	CheckMethod hasN5;
-	CheckMethod stringEqPAt5;
 	CheckMethod hasNamePAt5;
 	CheckMethod[] isPAt5;
 	
-	CheckMethod stringEqRR;
 	CheckMethod hasNameRR;
 	CheckMethod[] isRR;
 	
-	CheckMethod stringEqAP;
 	CheckMethod hasNameAP;
 	CheckMethod[] isAP;
 	
