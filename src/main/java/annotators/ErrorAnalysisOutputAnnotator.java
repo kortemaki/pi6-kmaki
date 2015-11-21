@@ -122,7 +122,7 @@ public class ErrorAnalysisOutputAnnotator extends CasAnnotator_ImplBase {
 	        	System.out.println("******Could not find F1-score output for document " + question.getId() + ".");
 	        }
 	        
-	        String text = String.format("%s,%d,%d,%d,%.3f,%.3f,%.3f\n", question.getId(), tp, fn, fp, prec, rec, f1);	        
+	        String text = String.format("%s,%d,%d,%d,%.3f,%.3f,%.3f", question.getId(), tp, fn, fp, prec, rec, f1);	        
 	        
 			OutputAnnotation output = new OutputAnnotation(jcas);
 			output.setComponentId(this.getClass().getName());

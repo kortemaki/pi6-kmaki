@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -114,9 +115,10 @@ public class AnalysisUtils {
 	public static float countFirstN(Iterable<Boolean> values, int n)
 	{
 		float sum = 0;
-		for(Boolean value : values)
+		Iterator<Boolean> it = values.iterator(); 
+		for(int i = 0; i < n; i++)
 		{
-			if(value)
+			if(it.hasNext() && it.next())
 				sum++;
 		}
 		return sum;
@@ -195,6 +197,8 @@ public class AnalysisUtils {
 		//False positives
 		Metric fp = new Metric(jcas);
 		float falsePos = CUTOFF - truePos;
+		if(falsePos < 0)
+			falsePos = 0;
 		fp.setValue(falsePos);
 		fp.setMetricName("False positives");
 		fp.setComponentId(AnalysisUtils.class.getName());
@@ -204,7 +208,11 @@ public class AnalysisUtils {
 		
 		//False negatives
 		Metric fn = new Metric(jcas);
-		float falseNeg = countFirstN(new ListReverser<Boolean>(correct),correct.size()-CUTOFF); 
+		float falseNeg = 0;
+		if(correct.size()-CUTOFF > 0)
+		{
+			falseNeg = countFirstN(new ListReverser<Boolean>(correct),correct.size()-CUTOFF);
+		}
 		fn.setValue(falseNeg);
 		fn.setMetricName("False negatives");
 		fn.setComponentId(AnalysisUtils.class.getName());
@@ -214,6 +222,8 @@ public class AnalysisUtils {
 		//True negatives
 		Metric tn = new Metric(jcas);
 		float trueNeg  = correct.size() - CUTOFF - falseNeg;
+		if(trueNeg < 0)
+			trueNeg = 0;
 		tn.setValue(trueNeg);
 		tn.setMetricName("True negatives");
 		tn.setComponentId(AnalysisUtils.class.getName());
@@ -228,6 +238,10 @@ public class AnalysisUtils {
 	}
 	
 	public static FSList addPrecisionToFSList(FSList metrics, Scoring score, JCas jcas) {
+		List<Boolean> correct = getCorrection(score);
+		float tp = countFirstN(correct,CUTOFF);
+		float fp = CUTOFF - tp;
+		
 		Metric precision = (Metric) TypeUtils.getFromFSList(metrics,Metric.class,isPrecision);
 		if(precision == null)
 		{
@@ -237,11 +251,23 @@ public class AnalysisUtils {
 		}
 		precision.setComponentId(AnalysisUtils.class.getName());
 		precision.setMetricName("Precision");
-		precision.setValue(precisionAtN(getCorrection(score),CUTOFF));
+		if(tp == 0)
+			precision.setValue(0);
+		else
+			precision.setValue(tp/(tp+fp));
+		//System.out.printf("%d:+%f-%f=%.3f",correct.size(),tp,fp,precision.getValue());
 		return metrics;
 	}
 
 	public static FSList addRecallToFSList(FSList metrics, Scoring score, JCas jcas) {
+		List<Boolean> correct = getCorrection(score);
+		float tp = countFirstN(correct,CUTOFF);
+		float fn = 0; 
+		if(correct.size()-CUTOFF > 0)
+		{
+			fn = countFirstN(new ListReverser<Boolean>(correct),correct.size()-CUTOFF);
+		}
+				
 		Metric recall = (Metric) TypeUtils.getFromFSList(metrics, Metric.class, isRecall);
 		if(recall == null)
 		{
@@ -251,8 +277,11 @@ public class AnalysisUtils {
 		}
 		recall.setComponentId(AnalysisUtils.class.getName());
 		recall.setMetricName("Recall");
-		List<Boolean> correct = getCorrection(score);
-		recall.setValue(countFirstN(correct,CUTOFF)/countFirstN(correct,correct.size()));
+		if(tp == 0)
+			recall.setValue(0);
+		else
+			recall.setValue(tp/(tp+fn));
+		//System.out.printf("%d:+%f-%f=%.3f",correct.size(),tp,fn,recall.getValue());
 		return metrics;
 	}
 

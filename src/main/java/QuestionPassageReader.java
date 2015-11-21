@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,6 @@ import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.util.FileUtils;
 import org.apache.uima.util.Progress;
 
-import type.OutputAnnotation;
 import util.RandomUtils;
 
 /**
@@ -120,9 +120,14 @@ public class QuestionPassageReader extends CollectionReader_ImplBase {
 			}
 		}
 		
+		//List<String> subsetOfQuestions = new ArrayList<String>(questions.keySet());
 		List<String> subsetOfQuestions = RandomUtils.getRandomSubset(new ArrayList<String>(questions.keySet()), 10);
 		
-		this.questionIterator = subsetOfQuestions.iterator();
+		/* Sort the question ids */
+		String[] arr = new String[subsetOfQuestions.size()];
+		arr = subsetOfQuestions.toArray(arr);
+		Arrays.sort(arr);
+		this.questionIterator = Arrays.asList(arr).iterator();
 	}	
 	
 	private boolean isQuestion(String line) {
